@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.10.4/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+    <title>心鼠工坊 | 尽情创造世界！</title>
+    <meta name="description" content="心鼠工坊，尽情创造世界！">
+    <meta name="keywords" content="Starlight Studio,星光工作室,心鼠工坊，迷你世界社区,编程,文创">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <meta http-equiv="windows-Target" contect="_top">
+    <meta name="robots" content="all">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <nav>
+            <h3>心鼠工坊</h3>
+        </nav>
+        <div class="view_container">
+            <div class="home_view">
+                <div class="banner">
+                    <img :src="cover" alt="Image Not Found">
+                    <h1>迷你热榜</h1>
+                    <ul>
+                        <li v-for="item in hots" :key="index"> {{ item }} </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="craft_view"></div>
+            <div class="community_view"></div>
+            <div class="infomation_view"></div>
+        </div>
+        <footer>
+            <ul>
+                <li class="bi bi-house"></li>
+                <li class="bi bi-hammer"></li>
+                <li class="bi bi-book"></li>
+                <li class="bi bi-person"></li>
+            </ul>
+        </footer>
+    </div>
+    <script>
+        let my_app = {
+            data()
+            {
+                return {
+                    cover: "https://s1.ax1x.com/2023/01/12/pSuJfij.jpg",
+                    hots: []
+                }
+            },
+            methods:
+            {
+                
+            },
+            beforeMount()
+            {
+                var reference = this;
+                $.getJSON("https://kfz.mini1.cn/center/japi/pub/hot/hotKey/?size=15", function(data)
+                {
+                    reference.hots = data.data;
+                    console.log(this.hots)
+                })
+            }
+        }
+        
+        Vue.createApp(my_app).mount("#app");
+    </script>
+</body>
+</html>
