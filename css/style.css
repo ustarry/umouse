@@ -1,6 +1,12 @@
 *{margin: 0;padding: 0;}
 
 
+a, a:visited
+{
+    text-decoration: none;
+    color: rebeccapurple;
+}
+
 ul li
 {
     list-style: none;
@@ -13,6 +19,12 @@ ul li
     overflow: hidden;
 }
 
+#app nav h3
+{
+    text-indent: 1em;
+}
+
+
 #app nav, #app footer
 {
     height: 50px;
@@ -21,11 +33,6 @@ ul li
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%), inset 0 -1px 0 rgb(0 0 0 / 15%);
 }
 
-#app .view_container
-{
-    height: calc(100% - 100px);
-    overflow: auto;
-}
 
 #app footer ul
 {
@@ -42,22 +49,68 @@ ul li
     font-size: larger;
 }
 
+#app .view_container
+{
+    margin: 0 auto;
+    width: 98%;
+    max-width: 600px;
+    height: calc(100% - 100px);
+    overflow: auto;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.no_scroll_bar
+{
+    /* hide the scrollbar for IE */
+    -ms-overflow-style: none;
+    /* hide the scrollbar for FIREFOX */
+    overflow: -moz-scrollbars-none;
+}
+
+/* hide the scrollbar for CHROME */
+.no_scroll_bar::-webkit-scrollbar
+{
+    width: 0;
+}
+
+
+.part
+{
+    width: calc(100% - 30px);
+    margin: 9px;
+    padding: 6px;
+    margin-top: 9px;
+    border-radius: 9px;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%), inset 0 -1px 0 rgb(0 0 0 / 15%);
+}
+
 .home_view, .craft_view, .community_view, .infomation_view
 {
     margin: 0 auto;
-    max-width: 880px;
+    width: 100%;
 }
 
-#app .home_view .banner
+#app .banner
 {
-    margin: 9px auto;
-    width: 80%;
+    margin: 9px;
     min-height: 60px;
 }
 
-#app .home_view .banner img
+#app .banner img
 {
     width: 100%;
-    max-width: 650px;
     border-radius: 8px;
+}
+
+#app .tools ul>li
+{
+    display: block;
+    float: left;
+    width: 33.3%;
+    min-width: 60px;
+    max-width: 120px;
 }

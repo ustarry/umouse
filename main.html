@@ -10,36 +10,54 @@
     <title>心鼠工坊 | 尽情创造世界！</title>
     <meta name="description" content="心鼠工坊，尽情创造世界！">
     <meta name="keywords" content="Starlight Studio,星光工作室,心鼠工坊，迷你世界社区,编程,文创">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <meta http-equiv="windows-Target" contect="_top">
     <meta name="robots" content="all">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
         <nav>
             <h3>心鼠工坊</h3>
         </nav>
-        <div class="view_container">
-            <div class="home_view">
+        <div class="view_container no_scroll_bar">
+            <div class="home_view" v-if="seen_page == 0">
                 <div class="banner">
                     <img :src="cover" alt="Image Not Found">
-                    <h1>迷你热榜</h1>
+                </div>
+                <div class="part">
+                    <h3>公告</h3>
+                    <p>心鼠工坊正在测试中，星光工作室出品。</p>
+                </div>
+                <div class="part">
+                    <h3>热门地图</h3>
                     <ul>
-                        <li v-for="item in hots" :key="index"> {{ item }} </li>
+                        <li v-for="(item, key) in hots"> No {{ key + 1 }}. {{ item }} </li>
                     </ul>
                 </div>
             </div>
-            <div class="craft_view"></div>
-            <div class="community_view"></div>
-            <div class="infomation_view"></div>
+            <div class="craft_view" v-if="seen_page == 1">
+                <div class="part tools">
+                    <h3>心鼠工具</h3>
+                    <ul>
+                        <li v-for="item in tools">
+                            <i class="bi bi-link-45deg"></i>
+                            <a :href="item.link">{{ item.title }}</a>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="community_view" v-if="seen_page == 2">
+            </div>
+            <div class="infomation_view" v-if="seen_page == 3"></div>
         </div>
         <footer>
             <ul>
-                <li class="bi bi-house"></li>
-                <li class="bi bi-hammer"></li>
-                <li class="bi bi-book"></li>
-                <li class="bi bi-person"></li>
+                <li class="bi bi-house" @click="seen_page = 0;"></li>
+                <li class="bi bi-hammer" @click="seen_page = 1;"></li>
+                <li class="bi bi-book" @click="seen_page = 2;"></li>
+                <li class="bi bi-person" @click="seen_page = 3;"></li>
             </ul>
         </footer>
     </div>
@@ -49,7 +67,18 @@
             {
                 return {
                     cover: "https://s1.ax1x.com/2023/01/12/pSuJfij.jpg",
-                    hots: []
+                    tools: [
+                        {title: "心鼠像素画", intro: "几个步骤，快速生成像素画！", link: "/tools/pixels.html"},
+                        {title: "心鼠自习室", intro: "自律自强！", link: "/tools/pixels.html"},
+                        {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
+                        {title: "心鼠编辑器", intro: "编写脚本，轻轻松松！", link: "/tools/pixels.html"},
+                        {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
+                        {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
+                        {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
+                        {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
+                    ],
+                    hots: [],
+                    seen_page: 0
                 }
             },
             methods:
@@ -59,7 +88,7 @@
             beforeMount()
             {
                 var reference = this;
-                $.getJSON("https://kfz.mini1.cn/center/japi/pub/hot/hotKey/?size=15", function(data)
+                $.getJSON("https://kfz.mini1.cn/center/japi/pub/hot/hotKey/?size=9", function(data)
                 {
                     reference.hots = data.data;
                     console.log(this.hots)
