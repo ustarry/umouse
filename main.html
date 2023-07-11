@@ -21,13 +21,23 @@
             <h3>心鼠工坊</h3>
         </nav>
         <div class="view_container no_scroll_bar">
-            <div class="home_view" v-if="seen_page == 0">
+            <div class="home_view" v-show="seen_page == 0">
                 <div class="banner">
                     <img :src="cover" alt="Image Not Found">
                 </div>
                 <div class="part">
                     <h3>公告</h3>
                     <p>心鼠工坊正在测试中，星光工作室出品。</p>
+                </div>
+                <div class="part recomandaction">
+                    <h3>为你推荐</h3>
+                    <ul style="position: relative;">
+                        <li v-for="(item, key) in random_some(maps, 4)" :key="key"> 
+                            <h4> {{ item.select.name }} by {{item.select.uin_name}} {{item.select.uin}}</h4>
+                            <p> {{ item.select.memo}}</p>
+                            <img :src="`https://map${item.select.node}.mini1.cn/map/${item.select.node}/${item.select.dir}/${item.select.thumb_md5}.png`" alt="Image Not Found">
+                        </li>
+                    </ul>
                 </div>
                 <div class="part">
                     <h3>热门地图</h3>
@@ -36,8 +46,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="craft_view" v-if="seen_page == 1">
-                <div class="part tools">
+            <div class="craft_view" v-show="seen_page == 1">
+                <div class="part lists">
                     <h3>心鼠工具</h3>
                     <ul>
                         <li v-for="item in tools">
@@ -47,10 +57,42 @@
                     </ul>
                     <div class="clear"></div>
                 </div>
+                <div class="part lists">
+                    <h3>心鼠推荐</h3>
+                    <ul>
+                        <li v-for="item in tools">
+                            <i class="bi bi-link-45deg"></i>
+                            <a :href="item.link">{{ item.title }}</a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
             </div>
-            <div class="community_view" v-if="seen_page == 2">
+            <div class="community_view" v-show="seen_page == 2">
+                <div class="part search">
+                    <input type="text" placeholder="查找相关的人\消息">
+                    <i class="bi bi-search"></i>
+                </div>
+                <div class="part">
+                    <h3>圈子动态</h3>
+                </div>
+                <div class="part">
+                    <h3>我的关注</h3>
+                </div>
             </div>
-            <div class="infomation_view" v-if="seen_page == 3"></div>
+            <div class="infomation_view" v-show="seen_page == 3">
+                <div class="part info">
+                    <div class="left">
+                        <img src="favicon.ico" alt="Image Not Found">
+                    </div>
+                    <div class="right">
+                        <h3>心鼠游客 <span style="font-size: small;">id: 114514</span></h3>
+                        <p>这个人很勤快，什么都留下了。</p>
+                    </div>
+                </div>
+                <div class="part">
+                </div>
+            </div>
         </div>
         <footer>
             <ul>
@@ -78,12 +120,27 @@
                         {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/pixels.html"},
                     ],
                     hots: [],
+                    maps: {},
                     seen_page: 0
                 }
             },
             methods:
             {
-                
+                random_some(data, count)
+                {
+                    var j = 0;
+                    var temp = {};
+                    for (const key in data)
+                    {
+                        temp[key] = data[key];
+                        ++j;
+                        if (j == count)
+                        {
+                            break;
+                        }
+                    }
+                    return temp;
+                }
             },
             beforeMount()
             {
@@ -91,7 +148,24 @@
                 $.getJSON("https://kfz.mini1.cn/center/japi/pub/hot/hotKey/?size=9", function(data)
                 {
                     reference.hots = data.data;
-                    console.log(this.hots)
+                })
+                $.getJSON("http://shequ.mini1.cn:8087/miniw/map?act=get_fp_list&apiid=&auth=d1d31d3ee0a1bead2e6ecee8100e4fc3&canal=6&json=1&s2t=1688809963&time=1688811336&uin=12345&ver=2.24.6", function(data)
+                {
+                    var buffer = ""
+                    for (var index = 0; index < data.creator_ai.length; ++index)
+                    {
+                        buffer += `${data.creator_ai[index]}-`
+                    }
+                    $.getJSON(`http://shequ.mini1.cn:8087/miniw/map?act=get_map_list_info&apiid=&auth=c71869f423dbff8f7a729be6bde6f49f&canal=6&expert=1&fn_list=${buffer}&json=1&s2t=1688809963&time=1688812801&uin=12345&ver=2.24.6`,
+                    function(data)
+                    {
+                        data.urls = undefined;
+                        for (const key in data)
+                        {
+                            if (key == "urls") {continue;}
+                            reference.maps[key] = JSON.parse(JSON.stringify(data[key]));
+                        }
+                    })
                 })
             }
         }
