@@ -106,11 +106,65 @@ ul li
     border-radius: 8px;
 }
 
-#app .tools ul>li
+#app .lists ul>li
 {
     display: block;
     float: left;
     width: 33.3%;
     min-width: 60px;
     max-width: 120px;
+}
+
+#app .recomandaction ul li img
+{
+    width: 100%;
+    border-radius: 8px;
+}
+
+#app .infomation_view .info
+{
+    height: 60px;
+}
+
+
+.left, .right
+{
+    float: left;
+    height: 100%;
+}
+
+#app .infomation_view .info .left img
+{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    vertical-align: middle;
+}
+
+#app .infomation_view .info .right
+{
+    width: calc(100% - 69px);
+    margin-left: 9px;
+}
+
+#app .community_view .search >*
+{
+    height: 30px;
+    background: transparent;
+}
+
+#app .community_view .search i
+{
+    width: 30px;
+}
+
+#app .community_view .search input
+{
+    width: calc(100% - 30px);
+}
+
+#app .community_view .search input:focus, #app .community_view .search input
+{
+    border: 0;
+    outline: none;
 }
