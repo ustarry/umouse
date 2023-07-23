@@ -110,15 +110,31 @@ ul li
 {
     display: block;
     float: left;
+    margin-top: 9px;
     width: 33.3%;
     min-width: 60px;
     max-width: 120px;
 }
 
-#app .recomandaction ul li img
+#app .recomandaction ul li .right *
+{
+    font-size: x-small;
+}
+
+#app .recomandaction ul li .left
+{
+    width: 40%;
+}
+
+#app .recomandaction ul li .right
+{
+    width: 60%;
+}
+
+#app .recomandaction ul li .left img
 {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 9px;
 }
 
 #app .infomation_view .info
