@@ -33,7 +33,9 @@
                     <h3>为你推荐</h3>
                     <ul style="position: relative;">
                         <li v-for="(item, key) in random_some(maps, 4)" :key="key">
+
                             <div class="left">
+                                <a :href="`miniworld://official.mini1.cn?type=mobpush_open_maproom_desc&partner_type=0&co_type=broadcast&zb_acc=0&zb_wid=${key}&check_code=0`"></a>
                                 <img :src="`https://map${item.select.node}.mini1.cn/map/${item.select.node}/${item.select.dir}/${item.select.thumb_md5}.png`"
                                     alt="Image Not Found">
                             </div>
@@ -121,7 +123,7 @@
                         {title: "心鼠记事本", intro: "记录生活点滴", link: "/tools/notepad.html"},
                         {title: "心鼠播放器", intro: "走进音乐", link: "/tools/musicplayer.html"},
                         {title: "心鼠ID库", intro: "记录ID信息", link: "/tools/notepad.html"},
-                        {title: "心鼠单词大师", intro: "快乐背单词", link: "/tools/musicplayer.html"},
+                        {title: "心鼠单词大师", intro: "快乐背单词", link: "/tools/words.html"},
                     ],
                     hots: [],
                     maps: {},
@@ -152,24 +154,23 @@
                 {
                     this.hots = data.data;
                 }.bind(this))
-                $.getJSON("https://shequ.mini1.cn:8087/miniw/map?act=get_fp_list&apiid=&auth=d1d31d3ee0a1bead2e6ecee8100e4fc3&canal=6&json=1&s2t=1688809963&time=1688811336&uin=12345&ver=2.24.6", function(data)
+                $.getJSON("http://shequ.mini1.cn:8087/miniw/map?act=get_fp_list&apiid=&auth=d1d31d3ee0a1bead2e6ecee8100e4fc3&canal=6&json=1&s2t=1688809963&time=1688811336&uin=12345&ver=2.24.6", function(data)
                 {
                     var buffer = ""
                     for (var index = 0; index < data.creator_ai.length; ++index)
                     {
                         buffer += `${data.creator_ai[index]}-`
                     }
-                    $.getJSON(`https://shequ.mini1.cn:8087/miniw/map?act=get_map_list_info&apiid=&auth=c71869f423dbff8f7a729be6bde6f49f&canal=6&expert=1&fn_list=${buffer}&json=1&s2t=1688809963&time=1688812801&uin=12345&ver=2.24.6`,
+                    $.getJSON(`http://shequ.mini1.cn:8087/miniw/map?act=get_map_list_info&apiid=&auth=c71869f423dbff8f7a729be6bde6f49f&canal=6&expert=1&fn_list=${buffer}&json=1&s2t=1688809963&time=1688812801&uin=12345&ver=2.24.6`,
                     function(data)
                     {
-                        data.urls = undefined;
+                        delete data.urls;
                         for (const key in data)
                         {
-                            if (key == "urls") {continue;}
-                            this.maps[key] = JSON.parse(JSON.stringify(data[key]));
+                            this.maps[key] = data[key];
                         }
                     }.bind(this))
-                })
+                }.bind(this))
             }
         }
         
